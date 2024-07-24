@@ -8,7 +8,7 @@ const Header = () => {
           <nav className="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
             <div className="container d-flex  ms-auto">
              <div>
-                <a className="navbar-brand" href="#">Book Your <span className='text-warning'>Ground</span></a>
+                <a className="navbar-brand" href="/">Book Your <span className='text-warning'>Ground</span></a>
              </div>
              <div>
               <a className="SignIn text-light me-2" href="#">SignIn</a>
