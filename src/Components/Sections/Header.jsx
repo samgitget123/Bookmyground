@@ -1,15 +1,15 @@
 import React from 'react';
-
+import logo from '../../Images/favicon.jpeg'
 
 const Header = () => {
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar navbar-expand-lg bg-dark bg-body-tertiary" data-bs-theme="dark">
       <div className="container-fluid d-flex justify-content-between align-items-center">
         <a className="navbar-brand" href="/">
           <img
-            src="" // Replace with your logo path
+            src={logo} // Replace with your logo path
             alt=""
-            
+            className='logo'
           />
         </a>
        
@@ -20,8 +20,8 @@ const Header = () => {
             placeholder="Search"
             aria-label="Search"
           />
-          <button className="btn btn-outline-success me-2" type="submit">Search</button>
-          <button className="btn btn-outline-success" type="submit">SignIn</button>
+          <button className="btn btn-outline-light me-2" type="submit">Search</button>
+          <button className="btn btn-outline-light" type="submit">SignIn</button>
         </form>
        
       </div>
