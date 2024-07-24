@@ -1,5 +1,4 @@
 import React from 'react'
-import logo from '../../Images/favicon.jpeg';
 import banner from '../../Images/turf.jpeg';
 const Herosection = () => {
   return (
