@@ -20,8 +20,9 @@ const Header = () => {
             placeholder="Search"
             aria-label="Search"
           />
+          
           <button className="btn btn-outline-light me-2" type="submit">Search</button>
-          <button className="btn btn-outline-light" type="submit">SignIn</button>
+          <a href="">SignIn</a>
         </form>
        
       </div>
