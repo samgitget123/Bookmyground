@@ -15,10 +15,22 @@ body {
 
 /******Logo********/
 .logo {
-  max-height: 50px; /* Adjust this value as needed */
-  height: auto;
-  width: auto;
+ height: 80vh;
+ width: 100%;
 }
 
+.SignIn{
+  text-decoration: none;
+font-size: medium;
+}
+
+.img-fluid {
+  width: 100%;
+  height: auto;
+}
+
+.heading_caption{
+  font-size: 30px;
+}
 
 
