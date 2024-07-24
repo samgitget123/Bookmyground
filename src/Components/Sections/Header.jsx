@@ -10,10 +10,7 @@ const Header = () => {
              <div>
                 <a className="navbar-brand" href="/">Book Your <span className='text-warning'>Ground</span></a>
              </div>
-             <div>
-              <a className="SignIn text-light me-2" href="#">SignIn</a>
-              <a className="SignIn text-light me-2" href="#">LogIn</a>
-             </div>
+           
             </div>
           </nav>
         </div >
