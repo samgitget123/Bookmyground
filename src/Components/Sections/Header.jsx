@@ -7,7 +7,7 @@ const Header = () => {
       <div className="container-fluid d-flex justify-content-between align-items-center">
         <a className="navbar-brand" href="#">
           <img
-            src="path/to/your/logo.png" // Replace with your logo path
+            src="" // Replace with your logo path
             alt="BookYourGround"
             
           />
