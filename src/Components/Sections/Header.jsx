@@ -8,7 +8,7 @@ const Header = () => {
         <a className="navbar-brand" href="/">
           <img
             src="" // Replace with your logo path
-            alt="BookYourGround"
+            alt=""
             
           />
         </a>
