@@ -49,15 +49,6 @@ const Herosection = () => {
                       <option key={index} value={addr.area}>{addr.area}</option>
                     ))}
                   </select>
-                  {/* <input 
-                    className="form-control me-2" 
-                    type="search" 
-                    placeholder="Search grounds" 
-                    aria-label="Search grounds" 
-                    value={searchQuery} 
-                    onChange={handleSearchChange} 
-                    disabled={!selectedArea} // Disable input if no area is selected
-                  /> */}
                 </form>
                 <div className='my-3'>
                   <h4 className='heading_caption'>Find Grounds <span className='text-warning'>@ Your Nearest</span></h4>
