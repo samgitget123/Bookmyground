@@ -26,11 +26,23 @@ font-size: medium;
 
 .img-fluid {
   width: 100%;
-  height: auto;
+ 
 }
 
 .heading_caption{
   font-size: 30px;
 }
+/* //hero section */
+
+.custom-carousel-height {
+  height: 400px; /* Adjust this value as needed */
+  position: relative;
+}
+
+.carousel-image {
+  height: 100%;
+  object-fit: cover; /* Cover the entire height while maintaining aspect ratio */
+}
+
 
 
