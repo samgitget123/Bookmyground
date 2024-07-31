@@ -44,5 +44,17 @@ font-size: medium;
   object-fit: cover; /* Cover the entire height while maintaining aspect ratio */
 }
 
+/**********view ground css***********/
+.ground-image {
+  width: 100%;
+  height: 60vh;
+  object-fit: cover; /* This will maintain the aspect ratio and crop the image if necessary */
+}
+
+.image-container {
+  overflow: hidden; /* Optional: Use this if you want to restrict the image to a specific size */
+}
+
+
 
 
