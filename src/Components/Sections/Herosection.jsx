@@ -5,7 +5,7 @@ import banner from '../../Images/turf.jpeg';
 
 const Herosection = () => {
   const dispatch = useDispatch();
-  const { cities, selectedCity, selectedArea, searchQuery } = useSelector(state => state.city);
+  const { cities, selectedCity, selectedArea } = useSelector(state => state.city);
 
   const handleCityChange = (event) => {
     dispatch(selectCity(event.target.value));
@@ -15,9 +15,7 @@ const Herosection = () => {
     dispatch(selectArea(event.target.value));
   };
 
-  const handleSearchChange = (event) => {
-    dispatch(setSearchQuery(event.target.value));
-  };
+ 
 
   return (
     <>
@@ -42,7 +40,7 @@ const Herosection = () => {
                     className="form-control me-2" 
                     value={selectedArea} 
                     onChange={handleAreaChange}
-                    disabled={!selectedCity} // Disable input if no city is selected
+                    disabled={!selectedCity} 
                   >
                     <option value="">Select an area</option>
                     {selectedCity && cities.find(city => city.city === selectedCity)?.addresses.map((addr, index) => (
