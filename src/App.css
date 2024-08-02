@@ -83,15 +83,16 @@ font-size: medium;
 /***********/
 .time-slot-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 10px;
 }
 
 .time-slot {
-  padding: 10px 15px;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  cursor: pointer;
+  text-align: center;
+  width: 100%;
 }
 
 .time-slot.available {
@@ -104,8 +105,3 @@ font-size: medium;
   color: white;
   cursor: not-allowed;
 }
-
-
-
-
-

@@ -45,10 +45,15 @@ const BookingForm = () => {
   const handleBooking = () => {
     // Handle the booking logic here
     const bookingSlots = [];
-    const startIndex = timeSlots.indexOf(selectedTime);
-    const durationSlots = slotDuration / 30;
-    for (let i = 0; i < durationSlots; i++) {
-      bookingSlots.push(timeSlots[startIndex + i]);
+    const [startHour, startMinute] = selectedTime.split(':').map(Number);
+    let currentMinutes = startHour * 60 + startMinute;
+
+    for (let minutes = 0; minutes < slotDuration; minutes += 30) {
+      const slotHour = Math.floor(currentMinutes / 60);
+      const slotMinute = currentMinutes % 60;
+      const slotTime = `${slotHour}:${slotMinute.toString().padStart(2, '0')}`;
+      bookingSlots.push(slotTime);
+      currentMinutes += 30;
     }
 
     setBookedSlots([...bookedSlots, ...bookingSlots]);
@@ -115,43 +120,39 @@ const BookingForm = () => {
       <section>
         <div className="container">
           <div className="row">
-            <div className="col-lg-6">
+            <div className="col-lg-12">
               <div className="card">
                 <div className="card-header">
-                  Available Slots
+                  Time Slots
                 </div>
                 <div className="card-body">
-                  <div className="time-slot-container">
-                    {timeSlots.filter(slot => !bookedSlots.includes(slot)).map((slot, index) => (
-                      <button
-                        key={index}
-                        type="button"
-                        className="time-slot available"
-                      >
-                        {formatTimeSlot(slot, slotDuration)}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-6">
-              <div className="card">
-                <div className="card-header">
-                  Booked Slots
-                </div>
-                <div className="card-body">
-                  <div className="time-slot-container">
-                    {timeSlots.filter(slot => bookedSlots.includes(slot)).map((slot, index) => (
-                      <button
-                        key={index}
-                        type="button"
-                        className="time-slot booked"
-                        disabled
-                      >
-                        {formatTimeSlot(slot, slotDuration)}
-                      </button>
-                    ))}
+                  <div className="row">
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                      <h5>Available Slots</h5>
+                      <div className="time-slot-container">
+                        {timeSlots.filter(slot => !bookedSlots.includes(slot)).map((slot, index) => (
+                          <div
+                            key={index}
+                            className="time-slot available"
+                          >
+                            {formatTimeSlot(slot, 30)}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                      <h5>Booked Slots</h5>
+                      <div className="time-slot-container">
+                        {bookedSlots.map((slot, index) => (
+                          <div
+                            key={index}
+                            className="time-slot booked"
+                          >
+                            {formatTimeSlot(slot, 30)}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
