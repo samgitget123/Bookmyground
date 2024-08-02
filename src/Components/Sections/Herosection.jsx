@@ -23,9 +23,9 @@ const Herosection = () => {
         <div className="container-fluid">
           <div className="row d-flex justify-content-center bg-light">
             <div className="col-lg-4 col-md-12 col-sm-12 col-xs-12 g-0 p-2 bg-light ">
-              <div className='my-5 py-5'>
+              <div className='my-2'>
                 <h4>Choose Your <span className='text-warning'>Ground</span></h4>
-                <form className="d-flex" role="search" onSubmit={(e) => e.preventDefault()}>
+                <form className="d-flex my-2" role="search" onSubmit={(e) => e.preventDefault()}>
                   <select 
                     className="form-control me-2" 
                     value={selectedCity} 

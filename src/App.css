@@ -55,6 +55,57 @@ font-size: medium;
   overflow: hidden; /* Optional: Use this if you want to restrict the image to a specific size */
 }
 
+/*********8Booking slots***********/
+.time-slot-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.time-slot {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.time-slot.available {
+  background-color: #28a745;
+  color: white;
+}
+
+.time-slot.booked {
+  background-color: #dc3545;
+  color: white;
+  cursor: not-allowed;
+}
+
+/***********/
+.time-slot-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.time-slot {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.time-slot.available {
+  background-color: #28a745;
+  color: white;
+}
+
+.time-slot.booked {
+  background-color: #dc3545;
+  color: white;
+  cursor: not-allowed;
+}
+
+
 
 
 
