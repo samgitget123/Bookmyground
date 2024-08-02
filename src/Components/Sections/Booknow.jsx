@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+
 const BookingForm = () => {
   const { bookingid } = useParams(); // Groundname
   console.log(bookingid, 'bookingid');
@@ -127,7 +128,7 @@ const BookingForm = () => {
                 </div>
                 <div className="card-body">
                   <div className="row">
-                    <div className="col-lg-6 col-md-6 col-sm-6">
+                    <div className="col-6">
                       <h5>Available Slots</h5>
                       <div className="time-slot-container">
                         {timeSlots.filter(slot => !bookedSlots.includes(slot)).map((slot, index) => (
@@ -140,7 +141,7 @@ const BookingForm = () => {
                         ))}
                       </div>
                     </div>
-                    <div className="col-lg-6 col-md-6 col-sm-6">
+                    <div className="col-6">
                       <h5>Booked Slots</h5>
                       <div className="time-slot-container">
                         {bookedSlots.map((slot, index) => (
