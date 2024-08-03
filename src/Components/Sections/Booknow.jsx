@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-
 const BookingForm = () => {
   const { bookingid } = useParams(); // Groundname
   console.log(bookingid, 'bookingid');
@@ -11,6 +10,7 @@ const BookingForm = () => {
   const [slotDuration, setSlotDuration] = useState(30); // 30 minutes interval
   const [timeSlots, setTimeSlots] = useState([]);
   const [bookedSlots, setBookedSlots] = useState([]); // List of booked slots
+  const [selectedSlots, setSelectedSlots] = useState([]); // List of selected slots
 
   useEffect(() => {
     // Set default values for date and time
@@ -20,9 +20,9 @@ const BookingForm = () => {
 
     // Initialize time slots (6 AM to 10 PM with 30-minute intervals)
     const slots = [];
-    for (let hour = 6; hour <= 22; hour++) {
+    for (let hour = 6; hour <= 26; hour++) {
       slots.push(`${hour}:00`);
-      if (hour < 22) slots.push(`${hour}:30`);
+      if (hour < 26) slots.push(`${hour}:30`);
     }
     setTimeSlots(slots);
   }, []);
@@ -43,27 +43,31 @@ const BookingForm = () => {
     setSlotDuration(parseInt(e.target.value));
   };
 
-  const handleBooking = () => {
-    // Handle the booking logic here
-    const bookingSlots = [];
-    const [startHour, startMinute] = selectedTime.split(':').map(Number);
-    let currentMinutes = startHour * 60 + startMinute;
+  const handleSlotClick = (slot) => {
+    const currentTime = new Date();
+    const currentDateString = currentTime.toISOString().split('T')[0];
+    const currentTimeString = currentTime.toTimeString().split(':').slice(0, 2).join(':');
 
-    for (let minutes = 0; minutes < slotDuration; minutes += 30) {
-      const slotHour = Math.floor(currentMinutes / 60);
-      const slotMinute = currentMinutes % 60;
-      const slotTime = `${slotHour}:${slotMinute.toString().padStart(2, '0')}`;
-      bookingSlots.push(slotTime);
-      currentMinutes += 30;
+    if (selectedDate === currentDateString && slot < currentTimeString) {
+      return; // Do not allow selection of slots less than the current time
     }
 
-    setBookedSlots([...bookedSlots, ...bookingSlots]);
+    if (selectedSlots.includes(slot)) {
+      setSelectedSlots(selectedSlots.filter(selectedSlot => selectedSlot !== slot));
+    } else {
+      setSelectedSlots([...selectedSlots, slot]);
+    }
+  };
+
+  const handleBooking = () => {
+    setBookedSlots([...bookedSlots, ...selectedSlots]);
+    setSelectedSlots([]); // Clear selected slots after booking
 
     console.log('Sport:', selectedSport);
     console.log('Date:', selectedDate);
     console.log('Time:', selectedTime);
     console.log('Slot Duration:', slotDuration, 'minutes');
-    console.log('Booked Slots:', bookingSlots);
+    console.log('Booked Slots:', bookedSlots);
   };
 
   const formatTime = (hour, minute) => {
@@ -121,39 +125,43 @@ const BookingForm = () => {
       <section>
         <div className="container">
           <div className="row">
-            <div className="col-lg-12">
+            <div className="col-lg-6 col-md-6 col-sm-12">
               <div className="card">
                 <div className="card-header">
                   Time Slots
                 </div>
                 <div className="card-body">
-                  <div className="row">
-                    <div className="col-6">
-                      <h5>Available Slots</h5>
-                      <div className="time-slot-container">
-                        {timeSlots.filter(slot => !bookedSlots.includes(slot)).map((slot, index) => (
-                          <div
-                            key={index}
-                            className="time-slot available"
-                          >
-                            {formatTimeSlot(slot, 30)}
-                          </div>
-                        ))}
+                  <h5>Available Slots</h5>
+                  <div className="time-slot-container">
+                    {timeSlots.filter(slot => !bookedSlots.includes(slot)).map((slot, index) => (
+                      <div
+                        key={index}
+                        className={`time-slot available ${selectedSlots.includes(slot) ? 'selected' : ''}`}
+                        onClick={() => handleSlotClick(slot)}
+                      >
+                        {formatTimeSlot(slot, 30)}
                       </div>
-                    </div>
-                    <div className="col-6">
-                      <h5>Booked Slots</h5>
-                      <div className="time-slot-container">
-                        {bookedSlots.map((slot, index) => (
-                          <div
-                            key={index}
-                            className="time-slot booked"
-                          >
-                            {formatTimeSlot(slot, 30)}
-                          </div>
-                        ))}
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-6 col-md-6 col-sm-12">
+              <div className="card">
+                <div className="card-header">
+                  Booked Slots
+                </div>
+                <div className="card-body">
+                  <h5>Booked Slots</h5>
+                  <div className="time-slot-container">
+                    {bookedSlots.map((slot, index) => (
+                      <div
+                        key={index}
+                        className="time-slot booked"
+                      >
+                        {formatTimeSlot(slot, 30)}
                       </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>
