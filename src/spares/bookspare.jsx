@@ -11,7 +11,7 @@ const BookingForm = () => {
   const [timeSlots, setTimeSlots] = useState([]);
   const [bookedSlots, setBookedSlots] = useState([]); // List of booked slots
   const [selectedSlots, setSelectedSlots] = useState([]); // List of selected slots
-
+  console.log(bookedSlots , 'booked slots initial');
   useEffect(() => {
     // Set default values for date and time
     const currentDate = new Date();
@@ -20,9 +20,9 @@ const BookingForm = () => {
 
     // Initialize time slots (6 AM to 10 PM with 30-minute intervals)
     const slots = [];
-    for (let hour = 6; hour <= 22; hour++) {
+    for (let hour = 6; hour <= 26; hour++) {
       slots.push(`${hour}:00`);
-      if (hour < 22) slots.push(`${hour}:30`);
+      if (hour < 26) slots.push(`${hour}:30`);
     }
     setTimeSlots(slots);
   }, []);
@@ -61,6 +61,7 @@ const BookingForm = () => {
 
   const handleBooking = () => {
     setBookedSlots([...bookedSlots, ...selectedSlots]);
+    console.log(bookedSlots , 'after in the funtion');
     setSelectedSlots([]); // Clear selected slots after booking
 
     console.log('Sport:', selectedSport);
