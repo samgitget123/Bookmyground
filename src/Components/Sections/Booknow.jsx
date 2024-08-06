@@ -100,17 +100,16 @@ const Booknow = () => {
       <section>
         <div className="container">
           <div className="row">
-         
-            <div className="col-12">
+            <div className="col-lg-12 col-md-12 com-sm-12 ">
               <div className="card">
                 <div className="card-header">
                   Time Slots
                 </div>
                 <div className="card-body">
                   <div className="row">
-                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div className="col">
                       <h5>Available Slots</h5>
-                      <div className="time-slot-container">
+                      <div className="time-slot-container d-flex justify-content-center text-align-center">
                         {timeSlots.filter(slot => !bookedSlots.includes(slot)).map((slot, index) => (
                           <div
                             key={index}
@@ -123,7 +122,7 @@ const Booknow = () => {
                         ))}
                       </div>
                     </div>
-                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div className="col">
                       <h5>Booked Slots</h5>
                       <div className="time-slot-container">
                         {bookedSlots.map((slot, index) => (

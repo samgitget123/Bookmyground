@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-const BookingForm = () => {
+const Booknow = () => {
   const { bookingid } = useParams(); // Groundname
   console.log(bookingid, 'bookingid');
   const [selectedSport, setSelectedSport] = useState('');
@@ -12,6 +12,7 @@ const BookingForm = () => {
   const [bookedSlots, setBookedSlots] = useState([]); // List of booked slots
   const [selectedSlots, setSelectedSlots] = useState([]); // List of selected slots
   console.log(bookedSlots , 'booked slots initial');
+
   useEffect(() => {
     // Set default values for date and time
     const currentDate = new Date();
@@ -58,7 +59,9 @@ const BookingForm = () => {
       setSelectedSlots([...selectedSlots, slot]);
     }
   };
-
+  const handleCancelSlot = (slot) => {
+    setBookedSlots(bookedSlots.filter(bookedSlots => bookedSlots !== slot));
+  };
   const handleBooking = () => {
     setBookedSlots([...bookedSlots, ...selectedSlots]);
     console.log(bookedSlots , 'after in the funtion');
@@ -90,79 +93,54 @@ const BookingForm = () => {
       <div className='row'>
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <h3>Book Your Ground</h3>
-          <form>
-            <div className="mb-3">
-              <label htmlFor="sport" className="form-label">Select Sport</label>
-              <select id="sport" className="form-control" value={selectedSport} onChange={handleSportChange}>
-                <option value="">Select a sport</option>
-                <option value="football">Football</option>
-                <option value="cricket">Cricket</option>
-                <option value="basketball">Basketball</option>
-                <option value="tennis">Tennis</option>
-                {/* Add more sports as needed */}
-              </select>
-            </div>
-
-            <div className="mb-3">
-              <label htmlFor="date" className="form-label">Select Date</label>
-              <input type="date" id="date" className="form-control" value={selectedDate} onChange={handleDateChange} />
-            </div>
-
-            <div className="mb-3">
-              <label htmlFor="time" className="form-label">Select Start Time</label>
-              <input type="time" id="time" className="form-control" value={selectedTime} onChange={handleTimeChange} />
-            </div>
-
-            <div className="mb-3">
-              <label htmlFor="slotDuration" className="form-label">Slot Duration (minutes)</label>
-              <input type="number" id="slotDuration" className="form-control" value={slotDuration} onChange={handleSlotDurationChange} min="30" step="30" />
-            </div>
-
-            <button type="button" className="btn btn-primary" onClick={handleBooking}>Book Now</button>
-          </form>
+          <button type="button" className="btn btn-primary my-2 w-100" onClick={handleBooking}>Book Now</button>
         </div>
       </div>
 
       <section>
         <div className="container">
           <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-12">
+         
+            <div className="col-12">
               <div className="card">
                 <div className="card-header">
                   Time Slots
                 </div>
                 <div className="card-body">
-                  <h5>Available Slots</h5>
-                  <div className="time-slot-container">
-                    {timeSlots.filter(slot => !bookedSlots.includes(slot)).map((slot, index) => (
-                      <div
-                        key={index}
-                        className={`time-slot available ${selectedSlots.includes(slot) ? 'selected' : ''}`}
-                        onClick={() => handleSlotClick(slot)}
-                      >
-                        {formatTimeSlot(slot, 30)}
+                  <div className="row">
+                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                      <h5>Available Slots</h5>
+                      <div className="time-slot-container">
+                        {timeSlots.filter(slot => !bookedSlots.includes(slot)).map((slot, index) => (
+                          <div
+                            key={index}
+                            className={`time-slot available ${selectedSlots.includes(slot) ? 'selected' : ''}`}
+                            onClick={() => handleSlotClick(slot)}
+                          >
+                            {formatTimeSlot(slot, 30)}
+                           
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-6 col-md-6 col-sm-12">
-              <div className="card">
-                <div className="card-header">
-                  Booked Slots
-                </div>
-                <div className="card-body">
-                  <h5>Booked Slots</h5>
-                  <div className="time-slot-container">
-                    {bookedSlots.map((slot, index) => (
-                      <div
-                        key={index}
-                        className="time-slot booked"
-                      >
-                        {formatTimeSlot(slot, 30)}
+                    </div>
+                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                      <h5>Booked Slots</h5>
+                      <div className="time-slot-container">
+                        {bookedSlots.map((slot, index) => (
+                          <div
+                            key={index}
+                            className="time-slot booked time-slot-booked"
+                          >
+                            {formatTimeSlot(slot, 30)}
+                            {bookedSlots.includes(slot) && (
+                              <button className="btn btn-danger btn-sm cancel-button ms-1" onClick={() => handleCancelSlot(slot)}>Cancel</button>
+                            )}
+                          </div>
+                        ))}
+                        
                       </div>
-                    ))}
+                      
+                    </div>
                   </div>
                 </div>
               </div>
@@ -174,4 +152,4 @@ const BookingForm = () => {
   );
 };
 
-export default BookingForm;
+export default Booknow;

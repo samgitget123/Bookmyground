@@ -1,4 +1,3 @@
-/* project css */
 /* Basic reset */
 * {
   margin: 0;
@@ -6,33 +5,28 @@
   box-sizing: border-box;
 }
 
-Typography
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
-
 }
 
-/******Logo********/
 .logo {
- height: 80vh;
- width: 100%;
+  height: 80vh;
+  width: 100%;
 }
 
-.SignIn{
+.SignIn {
   text-decoration: none;
-font-size: medium;
+  font-size: medium;
 }
 
 .img-fluid {
   width: 100%;
- 
 }
 
-.heading_caption{
+.heading_caption {
   font-size: 30px;
 }
-/* //hero section */
 
 .custom-carousel-height {
   height: 400px; /* Adjust this value as needed */
@@ -44,7 +38,6 @@ font-size: medium;
   object-fit: cover; /* Cover the entire height while maintaining aspect ratio */
 }
 
-/**********view ground css***********/
 .ground-image {
   width: 100%;
   height: 60vh;
@@ -55,24 +48,24 @@ font-size: medium;
   overflow: hidden; /* Optional: Use this if you want to restrict the image to a specific size */
 }
 
-/*********8Booking slots***********/
 .time-slot-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 0px;
 }
 
 .time-slot {
-  padding: 5px 5px;
+  padding: 10px 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
   text-align: center;
+  position: relative; /* To position the cancel button inside the slot */
 }
 
 .time-slot.available {
-  /* background-color: #28a745; */
-  color: #000
+  background-color: transparent; /* No background color initially */
+  color: #000;
 }
 .time-slot.available.selected {
   background-color: #28a745; /* Green background when selected */
@@ -82,38 +75,25 @@ font-size: medium;
   background-color: cadetblue;
   color: white;
   cursor: not-allowed;
-  width: 45%;
 }
 
-/***********/
-/* .time-slot-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.time-slot {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  text-align: center;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.time-slot.available {
-  
-  color: white;
-}
-
-.time-slot.booked {
-  background-color: #dc3545;
-  color: white;
-  cursor: not-allowed;
-} */
-
-@media (min-width: 576px) {
+@media (max-width: 768px) {
   .time-slot {
-    width: 40%;
+    width: 30%;
+    margin-bottom: 10px;
   }
+}
+
+@media (max-width: 576px) {
+  .time-slot {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+.btn.cancel-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 2px 5px;
 }
