@@ -21,9 +21,9 @@ const Booknow = () => {
 
     // Initialize time slots (6 AM to 10 PM with 30-minute intervals)
     const slots = [];
-    for (let hour = 6; hour <= 22; hour++) {
+    for (let hour = 6; hour <= 26; hour++) {
       slots.push(`${hour}:00`);
-      if (hour < 22) slots.push(`${hour}:30`);
+      if (hour < 26) slots.push(`${hour}:30`);
     }
     setTimeSlots(slots);
   }, []);
