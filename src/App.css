@@ -66,6 +66,7 @@ body {
 .time-slot.available {
   background-color: transparent; /* No background color initially */
   color: #000;
+  width: 50%;
 }
 .time-slot.available.selected {
   background-color: #28a745; /* Green background when selected */
@@ -75,6 +76,7 @@ body {
   background-color: cadetblue;
   color: white;
   cursor: not-allowed;
+  width: 50%;
 }
 
 @media (max-width: 768px) {
