@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 
 const Booknow = () => {
   const { bookingid } = useParams(); // Groundname
-  console.log(bookingid, 'bookingid');
   const [selectedSport, setSelectedSport] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
@@ -11,7 +10,6 @@ const Booknow = () => {
   const [timeSlots, setTimeSlots] = useState([]);
   const [bookedSlots, setBookedSlots] = useState([]); // List of booked slots
   const [selectedSlots, setSelectedSlots] = useState([]); // List of selected slots
-  console.log(bookedSlots, 'booked slots initial');
 
   useEffect(() => {
     // Set default values for date and time
@@ -21,49 +19,36 @@ const Booknow = () => {
 
     // Initialize time slots (6 AM to 2 AM with 30-minute intervals)
     const slots = [];
-  
     for (let hour = 6; hour < 24; hour++) {
-      slots.push(`${hour}:00`);
-      slots.push(`${hour}:30`);
+      slots.push(`${formatTime(hour, 0)}-${formatTime(hour, 30)}`);
+      slots.push(`${formatTime(hour, 30)}-${formatTime(hour + 1, 0)}`);
     }
     for (let hour = 0; hour <= 2; hour++) {
-      slots.push(`${hour}:00`);
-      if (hour < 2) slots.push(`${hour}:30`);
+      slots.push(`${formatTime(hour, 0)}-${formatTime(hour, 30)}`);
+      if (hour < 2) slots.push(`${formatTime(hour, 30)}-${formatTime(hour + 1, 0)}`);
     }
     setTimeSlots(slots);
   }, []);
-console.log(timeSlots , 'Available time slots')
-  const handleSportChange = (e) => {
-    setSelectedSport(e.target.value);
-  };
-
-  const handleDateChange = (e) => {
-    setSelectedDate(e.target.value);
-  };
-
-  const handleTimeChange = (e) => {
-    setSelectedTime(e.target.value);
-  };
-
-  const handleSlotDurationChange = (e) => {
-    setSlotDuration(parseInt(e.target.value));
+console.log(timeSlots , 'availabletimeslots');
+  const formatTime = (hour, minute) => {
+    const suffix = hour >= 12 ? 'PM' : 'AM';
+    const formattedHour = hour % 12 || 12;
+    return `${formattedHour}:${minute.toString().padStart(2, '0')} ${suffix}`;
   };
 
   const handleSlotClick = (slot) => {
     const currentTime = new Date();
     const currentDateString = currentTime.toISOString().split('T')[0];
     const currentTimeString = currentTime.toTimeString().split(':').slice(0, 2).join(':');
-    console.log(selectedDate, 'selectedDate', currentDateString, 'currentdate');
-    const [slotHour, slotMinute] = slot.split(':').map(Number);
+
+    const [slotStartTime] = slot.split('-');
+    const [slotHour, slotMinute] = slotStartTime.split(':').map(Number);
     const slotTime = new Date(selectedDate);
     slotTime.setHours(slotHour, slotMinute, 0, 0);
+
     const currentTimeForComparison = new Date();
     currentTimeForComparison.setSeconds(0, 0); // Ignore seconds and milliseconds for comparison
-    // if (selectedSlotTimeString === currentTimeString) {
-    //   alert('Timeout');
-    //   return;
-    // }
-    console.log(selectedSlots , 'selectedslots------>')
+
     if (selectedSlots.includes(slot)) {
       setSelectedSlots(selectedSlots.filter(selectedSlot => selectedSlot !== slot));
     } else {
@@ -78,23 +63,8 @@ console.log(timeSlots , 'Available time slots')
   const handleBooking = () => {
     setBookedSlots([...bookedSlots, ...selectedSlots]);
     setSelectedSlots([]); // Clear selected slots after booking
-
   };
-
-  const formatTime = (hour, minute) => {
-    const suffix = hour >= 12 ? 'PM' : 'AM';
-    const formattedHour = hour % 12 || 12;
-    return `${formattedHour}:${minute.toString().padStart(2, '0')} ${suffix}`;
-  };
-
-  const formatTimeSlot = (startTime, duration) => {
-    const [startHour, startMinute] = startTime.split(':').map(Number);
-    const totalMinutes = startHour * 60 + startMinute + duration;
-    const endHour = Math.floor(totalMinutes / 60);
-    const endMinute = totalMinutes % 60;
-    return `${formatTime(startHour, startMinute)} - ${formatTime(endHour, endMinute)}`;
-  };
-  
+console.log(bookedSlots , 'availablebookedslots');
   return (
     <div className="container my-4">
       <div className='row'>
@@ -117,15 +87,13 @@ console.log(timeSlots , 'Available time slots')
                     <div className="col">
                       <h5>Available Slots</h5>
                       <div className="time-slot-container d-flex justify-content-center text-align-center">
-                      
                         {timeSlots.filter(slot => !bookedSlots.includes(slot)).map((slot, index) => (
                           <div
                             key={index}
                             className={`time-slot available ${selectedSlots.includes(slot) ? 'selected' : ''}`}
-                            onClick={() => handleSlotClick(slot)} 
+                            onClick={() => handleSlotClick(slot)}
                           >
-                            {formatTimeSlot(slot, 30)}
-
+                            {slot}
                           </div>
                         ))}
                       </div>
@@ -137,17 +105,14 @@ console.log(timeSlots , 'Available time slots')
                           <div
                             key={index}
                             className="time-slot booked time-slot-booked"
-                            
                           >
-                            {formatTimeSlot(slot, 30)}
+                            {slot}
                             {bookedSlots.includes(slot) && (
                               <button className="btn btn-danger btn-sm cancel-button ms-1" onClick={() => handleCancelSlot(slot)}>Cancel</button>
                             )}
                           </div>
                         ))}
-
                       </div>
-
                     </div>
                   </div>
                 </div>

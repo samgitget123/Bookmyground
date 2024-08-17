@@ -12,12 +12,13 @@ const Booknow = () => {
   const [selectedSlots, setSelectedSlots] = useState([]); // List of selected slots
 
   useEffect(() => {
-    // Set default values for date and time
     const currentDate = new Date();
     setSelectedDate(currentDate.toISOString().split('T')[0]);
     setSelectedTime(currentDate.toTimeString().split(':').slice(0, 2).join(':'));
+    generateTimeSlots();
+  }, []);
 
-    // Initialize time slots (6 AM to 2 AM with 30-minute intervals)
+  const generateTimeSlots = (date = new Date()) => {
     const slots = [];
     for (let hour = 6; hour < 24; hour++) {
       slots.push(`${formatTime(hour, 0)}-${formatTime(hour, 30)}`);
@@ -28,8 +29,8 @@ const Booknow = () => {
       if (hour < 2) slots.push(`${formatTime(hour, 30)}-${formatTime(hour + 1, 0)}`);
     }
     setTimeSlots(slots);
-  }, []);
-console.log(timeSlots , 'availabletimeslots');
+  };
+
   const formatTime = (hour, minute) => {
     const suffix = hour >= 12 ? 'PM' : 'AM';
     const formattedHour = hour % 12 || 12;
@@ -37,23 +38,16 @@ console.log(timeSlots , 'availabletimeslots');
   };
 
   const handleSlotClick = (slot) => {
-    const currentTime = new Date();
-    const currentDateString = currentTime.toISOString().split('T')[0];
-    const currentTimeString = currentTime.toTimeString().split(':').slice(0, 2).join(':');
-
-    const [slotStartTime] = slot.split('-');
-    const [slotHour, slotMinute] = slotStartTime.split(':').map(Number);
-    const slotTime = new Date(selectedDate);
-    slotTime.setHours(slotHour, slotMinute, 0, 0);
-
-    const currentTimeForComparison = new Date();
-    currentTimeForComparison.setSeconds(0, 0); // Ignore seconds and milliseconds for comparison
-
     if (selectedSlots.includes(slot)) {
       setSelectedSlots(selectedSlots.filter(selectedSlot => selectedSlot !== slot));
     } else {
       setSelectedSlots([...selectedSlots, slot]);
     }
+  };
+
+  const handleDateChange = (e) => {
+    setSelectedDate(e.target.value);
+    generateTimeSlots(new Date(e.target.value));
   };
 
   const handleCancelSlot = (slot) => {
@@ -64,12 +58,25 @@ console.log(timeSlots , 'availabletimeslots');
     setBookedSlots([...bookedSlots, ...selectedSlots]);
     setSelectedSlots([]); // Clear selected slots after booking
   };
-console.log(bookedSlots , 'availablebookedslots');
+
   return (
     <div className="container my-4">
       <div className='row'>
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <h3>Book Your Ground</h3>
+
+          {/* Date Picker */}
+          <div className="my-3">
+            <label htmlFor="booking-date" className="form-label">Select Date:</label>
+            <input
+              type="date"
+              id="booking-date"
+              className="form-control"
+              value={selectedDate}
+              onChange={handleDateChange}
+            />
+          </div>
+
           <button type="button" className="btn btn-primary my-2 w-100" onClick={handleBooking}>Confirm Now</button>
         </div>
       </div>
@@ -80,7 +87,7 @@ console.log(bookedSlots , 'availablebookedslots');
             <div className="col-lg-12 col-md-12 com-sm-12 ">
               <div className="card">
                 <div className="card-header">
-                  Time Slots
+                  Time Slots for {selectedDate}
                 </div>
                 <div className="card-body">
                   <div className="row">
